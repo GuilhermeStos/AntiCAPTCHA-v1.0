@@ -3,15 +3,30 @@ import AntiCAPTCHA
 from PIL import Image
 
 def get_position(location):
+    """Captura a posição do cursor na tela.
+
+    Args:
+        location (string): Posição onde se deve colocar o cursor.
+
+    Returns:
+        integer: Retorna os valores X e Y relativos a posição do cursor na tela.
+    """
+    
     conf = ptog.confirm(f"Posicione o mouse no canto {location} da imagem desejada e pressione ENTER.")
     
     if conf == "OK":
         mouseX, mouseY = ptog.position()
         return mouseX, mouseY
     else:
-        return 
+        AntiCAPTCHA.begin()
 
 def get_area():
+    """Calcula as dimensões da região desejada.
+
+    Returns:
+        integer: Valor de X e Y do canto superior esquerdo, além da largura e altura da região.
+    """
+    
     step = " Passo 1 - Dimensionamento"
     print("|" + step + (" " * (52 - (len(step)))) + "|")
 
@@ -23,6 +38,12 @@ def get_area():
     return posX1, posY1, wid, hei
 
 def get_screenshot_position():
+    """Captura a tela na região retangular desejada.
+
+    Returns:
+        integer: Valor de X e Y do canto superior esquerdo, além da largura e altura da região capturada.
+    """
+    
     x, y, wid, hei = get_area()
 
     step = " Passo 2 - Captura de teste"
@@ -35,19 +56,31 @@ def get_screenshot_position():
     return x, y, wid, hei
 
 def screenshot_database(x, y, wid, hei):
+    """Captura um mesmo ponto da tela e atualiza a página o número desejado de vezes (criando um banco de dados bruto).
+
+    Args:
+        x (integer): Valor X da posição do canto superior esquerdo da área de captura.
+        y (integer): Valor Y da posição do canto superior esquerdo da área de captura.
+        wid (integer): Largura da área de captura.
+        hei (integer): Altura da área de captura.
+    """
+    
     step = " Passo 3 - Realizar capturas"
     print("|" + step + (" " * (52 - (len(step)))) + "|")
+    print("|" + (" " * 52) + "|")
 
-    print(" ")
-    step = " Certifiqui-se de que a janela esteja na aberta!!!"
+    step = " Certifique-se de que a janela esteja na aberta!!!"
     print("|" + step + (" " * (52 - (len(step)))) + "|")
 
-    step = " Quantos screenshots deseja que sejam realizados?"
-    screens = input("|" + step + (" " * (52 - (len(step)))))
+    screens = input("| Quantos screenshots devem ser realizados? ")
+    step = len(str(screens))
+    print(f"\033[A| Quantos screenshots devem ser realizados? {screens}" + (" " * (9 - step)) + "|")
 
-    step = "Quantos segundos deseja esperar?"
-    delay = input("|" + step + (" " * (52 - (len(step)))))
-    
+    delay = input("| Quantos segundos deseja esperar? ")
+    step = len(str(delay))
+    print(f"\033[A| Quantos segundos deseja esperar? {delay}" + (" " * (18 - step)) + "|")
+    print("|" + ("_" * 52) + "|")
+
     ptog.alert('Não esqueça de re-abrir a janela que deseja realizar os screenshots, antes de clicar em "OK"')
     for c in range(int(screens)):
         ptog.screenshot(f'C:\\Users\\gui19\\Documents\\Projetos\\AntiCAPTCHA v1.0\\data\\unprocessed\\screen{c}.png', region=(x, y, wid, hei))
@@ -55,6 +88,13 @@ def screenshot_database(x, y, wid, hei):
         ptog.PAUSE = int(delay)
 
 def create_screen():
+    """Chama as fuções criando a tela realizando os processos.
+    """
+    
     AntiCAPTCHA.header_setup("CAPTURE DATA")
     x, y, wid, hei = get_screenshot_position()
     screenshot_database(x, y, wid, hei)
+    AntiCAPTCHA.begin()
+
+if __name__ == "__main__":
+    create_screen()
