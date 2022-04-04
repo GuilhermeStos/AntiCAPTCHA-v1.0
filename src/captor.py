@@ -12,7 +12,7 @@ def get_position(location):
         return 
 
 def get_area():
-    step = "Passo 1 - Dimensionamento"
+    step = " Passo 1 - Dimensionamento"
     print("|" + step + (" " * (52 - (len(step)))) + "|")
 
     posX1, posY1 = get_position("superior esquerdo")
@@ -23,29 +23,34 @@ def get_area():
     return posX1, posY1, wid, hei
 
 def get_screenshot_position():
-    conf = "Cancel"
     x, y, wid, hei = get_area()
-    img = ptog.screenshot('C:\\Users\\gui19\\Documents\\Projetos\\AntiCAPTCHA\\data\\unprocessed\\screenshot_test.png', region=(x, y, wid, hei))
-       
-    img = Image.open('C:\\Users\\gui19\\Documents\\Projetos\\AntiCAPTCHA\\data\\unprocessed\\screenshot_test.png')
-    img.show()
-       
-    step = "Passo 2 - Captura de teste"
+
+    step = " Passo 2 - Captura de teste"
     print("|" + step + (" " * (52 - (len(step)))) + "|")
-        
+
+    img = ptog.screenshot('C:\\Users\\gui19\\Documents\\Projetos\\AntiCAPTCHA v1.0\\data\\unprocessed\\screenshot_test.png', region=(x, y, wid, hei))
+       
+    img = Image.open('C:\\Users\\gui19\\Documents\\Projetos\\AntiCAPTCHA v1.0\\data\\unprocessed\\screenshot_test.png')
+    img.show()    
     return x, y, wid, hei
 
 def screenshot_database(x, y, wid, hei):
-    step = "Passo 3 - Realizar capturas"
+    step = " Passo 3 - Realizar capturas"
     print("|" + step + (" " * (52 - (len(step)))) + "|")
-    print("|" + ("_" * 52) + "|")
+
     print(" ")
-    print("| Certifiqui-se de que a janela esteja na aberta!!! ")
-    screens = input("| Quantos screenshots deseja que sejam realizados? ")
-    delay = input("| Quantos segundos deseja esperar? ")
+    step = " Certifiqui-se de que a janela esteja na aberta!!!"
+    print("|" + step + (" " * (52 - (len(step)))) + "|")
+
+    step = " Quantos screenshots deseja que sejam realizados?"
+    screens = input("|" + step + (" " * (52 - (len(step)))))
+
+    step = "Quantos segundos deseja esperar?"
+    delay = input("|" + step + (" " * (52 - (len(step)))))
+    
     ptog.alert('Não esqueça de re-abrir a janela que deseja realizar os screenshots, antes de clicar em "OK"')
     for c in range(int(screens)):
-        ptog.screenshot(f'C:\\Users\\gui19\\Documents\\Projetos\\AntiCAPTCHA\\data\\unprocessed\\screen{c}.png', region=(x, y, wid, hei))
+        ptog.screenshot(f'C:\\Users\\gui19\\Documents\\Projetos\\AntiCAPTCHA v1.0\\data\\unprocessed\\screen{c}.png', region=(x, y, wid, hei))
         ptog.click(x=87, y=51)
         ptog.PAUSE = int(delay)
 
