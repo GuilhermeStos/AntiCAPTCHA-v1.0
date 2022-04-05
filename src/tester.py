@@ -1,8 +1,6 @@
-import os
-import glob
 import AntiCAPTCHA
+import processer
 import cv2 as cv
-import pyautogui as ptog
 from PIL import Image
 
 manners = [
@@ -16,38 +14,81 @@ manners = [
 def menu_setup():
     print("| Escolha o metodo de Threshold:                     |")
     print("|                                                    |")
-    print("| 1 - Binario                                        |")
-    print("| 2 - Binario Invertido                              |")
-    print("| 3 - Para Zero                                      |")
-    print("| 4 - Para Zero Invertido                            |")
-    print("| 5 - Truncado                                       |")
+    print("| 1 - Truncado                                       |")
+    print("| 2 - Binario                                        |")
+    print("| 3 - Binario Invertido                              |")
+    print("| 4 - Para Zero                                      |")
+    print("| 5 - Para Zero Invertido                            |")
     print("|" + ("_" * 52) + "|")
     print(" ")
     return input("| Sua opção: ")
 
-def test_image(grayImage, manner):
-    _, noiseless_image = cv.threshold(grayImage, 127, 255, manner or cv.THRESH_OTSU)
-    cv.imwrite('testScripts\\processingTests\\noiseless_image.png', noiseless_image)
-    img = Image.open('C:\\Users\\gui19\\Documents\\Projetos\\AntiCAPTCHA v1.0\\data\\unprocessed\\noiseless_image.png')
-    img.show()
-    ptog.confirm("Gostaria de testar outra imagem?")
+def test_image(path='C:\\Users\\gui19\\Documents\\Projetos\\AntiCAPTCHA v1.0\\data\\unprocessed\\screenshot_test.png'):
+
+    def text_image(img, text, i):
+        img = cv.putText(img=img, text=text, org=(0, 25), fontFace=cv.FONT_HERSHEY_DUPLEX, fontScale=1, color=(0, 0, 255), thickness=1)
+        cv.imwrite(f'C:\\Users\\gui19\\Documents\\Projetos\\AntiCAPTCHA v1.0\\data\\screenshot{i}.png', img)
+
+    def concat_tile(im_list_2d):
+        return cv.vconcat([cv.hconcat(im_list_h) for im_list_h in im_list_2d])
+
+    image = cv.imread(fr'{path}')
+    grayImage = cv.cvtColor(img, cv.COLOR_RGB2GRAY)
+
+    i = 0
+    for manner in manners:    
+        _, noiselessImage = cv.threshold(grayImage, 127, 255, manner or cv.THRESH_OTSU)
+        img = cv.cvtColor(noiselessImage, cv.COLOR_GRAY2RGB)
+        
+        if manner == 0:
+            text_image(img, "Binario", i)
+        elif manner == 1:
+            text_image(img, "Binario Inv", i)
+        elif manner == 2:
+            text_image(img, "Truncado", i)
+        elif manner == 3:
+            text_image(img, "Para Zero", i)
+        elif manner == 4:
+            text_image(img, "Para Zero Inv", i)
+    
+        i += 1
+
+    text_image(image, "Padrao", 5)
+
+    i = 0
+    imgs = []
+    for i in range(6):
+        imgs.append(cv.imread(f'C:\\Users\\gui19\\Documents\\Projetos\\AntiCAPTCHA v1.0\\data\\screenshot{i}.png'))
+
+    img = concat_tile([[imgs[5], imgs[0]],
+                       [imgs[1], imgs[2]], 
+                       [imgs[3], imgs[4]]])
+    
+    cv.imwrite('C:\\Users\\gui19\\Documents\\Projetos\\AntiCAPTCHA v1.0\\data\\processed\\samples.png', img)
+
+    image = Image.open('C:\\Users\\gui19\\Documents\\Projetos\\AntiCAPTCHA v1.0\\data\\processed\\samples.png')
+    image.show()
+
 
 def treatment_choose():
     AntiCAPTCHA.header_setup("TREAT IMAGES")
+    
+    path = input("| Insira o caminho da imagem na maquina:             |")
+    print("| Crinando imagem de teste...                        |")
+    test_image(path)
+    
     option = menu_setup()
-    img = cv.imread('C:\\Users\\gui19\\Documents\\Projetos\\AntiCAPTCHA\\data\\unprocessed\\screenshot_test.png')
-    grayImage = cv.cvtColor(img, cv.COLOR_RGB2GRAY)
 
-    if option == "1":
-        test_image(grayImage, cv.THRESH_BINARY)
-    if option == "2":
-        test_image(grayImage, cv.THRESH_BINARY_INV)
-    if option == "3":
-        test_image(grayImage, cv.THRESH_TOZERO)
-    if option == "4":
-        test_image(grayImage, cv.THRESH_TOZERO_INV)
-    if option == "5":
-        test_image(grayImage, cv.THRESH_TRUNC)
+    if option == '1':
+        processer.begin_processing(cv.THRESH_TRUNC)
+    elif option == '2':
+        processer.begin_processing(cv.THRESH_BINARY)
+    elif option == '3':
+        processer.begin_processing(cv.THRESH_BINARY_INV)
+    elif option == '4':
+        processer.begin_processing(cv.THRESH_TOZERO)
+    elif option == '5':
+        processer.begin_processing(cv.THRESH_TOZERO_INV)
 
 if __name__ == "__main__":
     treatment_choose()
