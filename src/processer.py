@@ -33,11 +33,27 @@ def image_processing(manner, originFolder, destinyFolder):
         image2.save(f'{destinyFolder}/{nameFile}')
 
 def begin_processing(manner):
+
+    for i in range(6):
+        os.remove(f'C:\\Users\\gui19\\Documents\\Projetos\\AntiCAPTCHA v1.0\\data\\screenshot{i}.png')
+    
     AntiCAPTCHA.header_setup("TREAT IMAGES")
-              
+
+    src =r'C:\Users\gui19\Documents\Projetos\AntiCAPTCHA v1.0\data\unprocessed\screenshot_test.png' 
+    des =r'C:\Users\gui19\Documents\Projetos\AntiCAPTCHA v1.0\data\processed\screenshot_test.png' 
+    os.replace(src, des)        
+    
     origin =  input("| Pasta de origem das imagens:                       |")
+    print(f"\033[A\033[A| {origin}                                      |")
+
+    print("|" + (" " * 52) + "|")
+    
     destiny = input("| Pasta de destimo das imagens processadas:          |")
+    print(f"\033[A\033[A| {destiny}                                        |")
+    
     image_processing(manner, origin, destiny)
 
+    print("|" + ("_" * 52) + "|")
+
 if __name__ == "__main__":
-    image_processing('dbCAPTCHA')
+    begin_processing(cv.THRESH_TRUNC)

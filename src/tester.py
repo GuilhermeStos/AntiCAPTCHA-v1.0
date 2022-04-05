@@ -4,11 +4,11 @@ import cv2 as cv
 from PIL import Image
 
 manners = [
+    cv.THRESH_TRUNC,
     cv.THRESH_BINARY,
     cv.THRESH_BINARY_INV,
     cv.THRESH_TOZERO,
-    cv.THRESH_TOZERO_INV,
-    cv.THRESH_TRUNC,
+    cv.THRESH_TOZERO_INV
 ]
 
 def menu_setup():
@@ -33,7 +33,7 @@ def test_image(path='C:\\Users\\gui19\\Documents\\Projetos\\AntiCAPTCHA v1.0\\da
         return cv.vconcat([cv.hconcat(im_list_h) for im_list_h in im_list_2d])
 
     image = cv.imread(fr'{path}')
-    grayImage = cv.cvtColor(img, cv.COLOR_RGB2GRAY)
+    grayImage = cv.cvtColor(image, cv.COLOR_RGB2GRAY)
 
     i = 0
     for manner in manners:    
@@ -75,6 +75,8 @@ def treatment_choose():
     
     path = input("| Insira o caminho da imagem na maquina:             |")
     print("| Crinando imagem de teste...                        |")
+
+    AntiCAPTCHA.header_setup("TREAT IMAGES")
     test_image(path)
     
     option = menu_setup()
