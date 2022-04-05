@@ -6,7 +6,7 @@ def get_position(location):
     """Captura a posição do cursor na tela.
 
     Args:
-        location (string): Posição onde se deve colocar o cursor.
+        location (str): Posição onde se deve colocar o cursor.
 
     Returns:
         integer: Retorna os valores X e Y relativos a posição do cursor na tela.
@@ -24,7 +24,7 @@ def get_area():
     """Calcula as dimensões da região desejada.
 
     Returns:
-        integer: Valor de X e Y do canto superior esquerdo, além da largura e altura da região.
+        int: Valor de X e Y do canto superior esquerdo, além da largura e altura da região.
     """
     
     step = " Passo 1 - Dimensionamento"
@@ -41,7 +41,7 @@ def get_screenshot_position():
     """Captura a tela na região retangular desejada.
 
     Returns:
-        integer: Valor de X e Y do canto superior esquerdo, além da largura e altura da região capturada.
+        int: Valor de X e Y do canto superior esquerdo, além da largura e altura da região capturada.
     """
     
     x, y, wid, hei = get_area()
@@ -59,10 +59,10 @@ def screenshot_database(x, y, wid, hei):
     """Captura um mesmo ponto da tela e atualiza a página o número desejado de vezes (criando um banco de dados bruto).
 
     Args:
-        x (integer): Valor X da posição do canto superior esquerdo da área de captura.
-        y (integer): Valor Y da posição do canto superior esquerdo da área de captura.
-        wid (integer): Largura da área de captura.
-        hei (integer): Altura da área de captura.
+        x (int): Valor X da posição do canto superior esquerdo da área de captura.
+        y (int): Valor Y da posição do canto superior esquerdo da área de captura.
+        wid (int): Largura da área de captura.
+        hei (int): Altura da área de captura.
     """
     
     step = " Passo 3 - Realizar capturas"

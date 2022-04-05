@@ -12,6 +12,12 @@ manners = [
 ]
 
 def menu_setup():
+    """Cria a interface do menu.
+
+    Returns:
+        str: Opção escolhida pelo usuario.
+    """
+    
     print("| Escolha o metodo de Threshold:                     |")
     print("|                                                    |")
     print("| 1 - Truncado                                       |")
@@ -24,12 +30,32 @@ def menu_setup():
     return input("| Sua opção: ")
 
 def test_image(path='C:\\Users\\gui19\\Documents\\Projetos\\AntiCAPTCHA v1.0\\data\\unprocessed\\screenshot_test.png'):
+    """Cria uma amostra de imagem com todos os metodos para teste.
+
+    Args:
+        path (str, optional): Caminho do arquivo a ser usado como modelo. Defaults to 'C:\Users\gui19\Documents\Projetos\AntiCAPTCHA v1.0\data\unprocessed\screenshot_test.png'.
+    """
 
     def text_image(img, text, i):
+        """Cria uma imagem com o modelo aplicado.
+
+        Args:
+            img (OpenCV data): Traz a imagem OpenCV armazenada.
+            text (str): Texto de identificação da imagem.
+            i (int): Valor usado para nomear a imagem.
+        """
         img = cv.putText(img=img, text=text, org=(0, 25), fontFace=cv.FONT_HERSHEY_DUPLEX, fontScale=1, color=(0, 0, 255), thickness=1)
         cv.imwrite(f'C:\\Users\\gui19\\Documents\\Projetos\\AntiCAPTCHA v1.0\\data\\screenshot{i}.png', img)
 
     def concat_tile(im_list_2d):
+        """Agrupa as imagens em uma unica.
+
+        Args:
+            im_list_2d (lista de imagens): Traz as imagens a serem colocadas juntas.
+
+        Returns:
+            imagem: Imagem concatenada.
+        """
         return cv.vconcat([cv.hconcat(im_list_h) for im_list_h in im_list_2d])
 
     image = cv.imread(fr'{path}')
@@ -71,6 +97,9 @@ def test_image(path='C:\\Users\\gui19\\Documents\\Projetos\\AntiCAPTCHA v1.0\\da
 
 
 def treatment_choose():
+    """Chama outras funções de outros scripts com base no input recebido.
+    """
+
     AntiCAPTCHA.header_setup("TREAT IMAGES")
     
     path = input("| Insira o caminho da imagem na maquina:             |")

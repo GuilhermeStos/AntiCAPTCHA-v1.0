@@ -21,7 +21,7 @@ def header_setup(name):
     """Função de criação de cabeçalhos.
 
     Args:
-        name (string): Nome a ser inserido no cabeçalho.
+        name (str): Nome a ser inserido no cabeçalho.
     """
     
     os.system('cls') or None
@@ -43,7 +43,7 @@ def choose_metod(opt):
     """Chama outras funções de outros scripts com base no input recebido.
 
     Args:
-        opt (string): Valor da opção desejada no menu.
+        opt (str): Valor da opção desejada no menu.
     """
     
     if opt == "1":

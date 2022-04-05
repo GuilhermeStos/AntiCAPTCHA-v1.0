@@ -5,6 +5,13 @@ import cv2 as cv
 from PIL import Image
 
 def image_processing(manner, originFolder, destinyFolder):
+    """Coleta as imagens e aplica o processamento em todas.
+
+    Args:
+        manner (integer): ID da função a ser utilizada.
+        originFolder (str): Pasta de origem das imagens.
+        destinyFolder (str): Pasta de destino das imagens.
+    """
     
     files = gb.glob(f'{originFolder}/*')
     
@@ -33,6 +40,11 @@ def image_processing(manner, originFolder, destinyFolder):
         image2.save(f'{destinyFolder}/{nameFile}')
 
 def begin_processing(manner):
+    """Chama as funções iniciais e prepara a interface.
+
+    Args:
+        manner (int): ID da função a ser utilizada.
+    """
 
     for i in range(6):
         os.remove(f'C:\\Users\\gui19\\Documents\\Projetos\\AntiCAPTCHA v1.0\\data\\screenshot{i}.png')
